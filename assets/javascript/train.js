@@ -33,6 +33,30 @@ database.ref().on("child_added", function (childSnap) {
 
 });
 
+//declaring newTrain object to store other variables to be used later
+
+var newTrain = {
+    name: trainName,
+    destination: destination,
+    firstTrain: firstTrain,
+    frequency: frequency,
+    min: minUntilTrain,
+    next: nextTrain
+}
+
+
+database.ref().on("value", function (snapshot) {
+
+
+});
+
+//grabs information from the input fields
+$("#TrainBtn").on("click", function () {
+
+    var trainName = $("#trainName").val().trim();
+    var destination = $("#destination").val().trim();
+    var firstTrain = $("#first").val().trim();
+    var frequency = $("#freq").val().trim();
 
 
 
