@@ -11,3 +11,11 @@ var config = {
 
 //initializing firebase connection and passing through config object
 firebase.initializeApp(config);
+
+var database = firebase.database();
+var currentTime = moment();
+
+//creating listener to listen for changes made to database
+database.ref().on("child_added", function (childSnap) {
+    console.log(childSnap.val());
+})
