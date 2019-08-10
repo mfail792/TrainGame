@@ -3,4 +3,6 @@
         width: 100%;
         background-image: url("https://www.toptal.com/designers/subtlepatterns/patterns/lilypads.png");
         text-align: center;
+        text-shadow: 4px 4px 4px #aaa;
+        font-size: 20px;
     }

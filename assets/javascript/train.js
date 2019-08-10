@@ -1,5 +1,5 @@
 // referencing firebase server to authenicate and initialize the application
-const firebaseConfig = {
+var config = {
     apiKey: "AIzaSyBI99NPnup0E664hUhummmuSYKwX0p_UBA",
     authDomain: "project1-ebc4f.firebaseapp.com",
     databaseURL: "https://project1-ebc4f.firebaseio.com",
@@ -9,3 +9,5 @@ const firebaseConfig = {
     appId: "1:677210244714:web:e074b7c2ed781fc8"
 };
 
+//initializing firebase connection and passing through config object
+firebase.initializeApp(config);

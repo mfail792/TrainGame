@@ -7,6 +7,8 @@
     <title>Train Game</title>
     <!--linking firebase server-->
     <script src="https://www.gstatic.com/firebasejs/6.3.5/firebase-app.js"></script>
+    <!--google font link-->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Tangerine">
     <!--jquery link-->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <!--CSS file link-->
@@ -22,11 +24,35 @@
 <body>
     <div class='container'>
         <div class='row'>
+            <div class='card-panel z-depth-2 black accent-3 white-text'>
+                <h3 class='center-align'>Train Schedule</h3>
+            </div>
+        </div>
+
+        <div class='row'>
+            <!-- Display Panel -->
+            <div class='card-panel trainInfo'>
+                <h4 class='center-align'>Current Train Schedule</h4>
+                <table class="table striped center bordered responsive-table" id='trainTable'>
+                    <thead>
+                        <tr>
+                            <th>Train Name</th>
+                            <th>Destination</th>
+                            <th>Frequency (minutes)</th>
+                            <th>Next Arrival</th>
+                            <th>Minutes Away</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    </tbody>
+                </table>
+            </div>
+        </div>
 
 
 
 
-            <script src="./assets/javascript/train.js"></script>
+        <script src="./assets/javascript/train.js"></script>
 </body>
 
 
