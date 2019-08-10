@@ -19,3 +19,11 @@ var currentTime = moment();
 database.ref().on("child_added", function (childSnap) {
     console.log(childSnap.val());
 })
+
+//making variables to store values from user input
+var name = childSnap.val().name;
+var destination = childSnap.val().destination;
+var firstTrain = childSnap.val().firstTrain;
+var frequency = childSnap.val().frequency;
+var min = childSnap.val().min;
+var next = childSnap.val().next;
