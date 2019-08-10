@@ -30,7 +30,7 @@
         </div>
 
         <div class='row'>
-            <!-- Display Panel -->
+            <!-- train details via table -->
             <div class='card-panel trainInfo'>
                 <h4 class='center-align'>Current Train Schedule</h4>
                 <table class="table striped center bordered responsive-table" id='trainTable'>
@@ -48,11 +48,36 @@
                 </table>
             </div>
         </div>
+        <!--adding train specifics that user can input-->
+        <div class='row'>
+            <div class='card-panel'>
+                <h4 class='center-align'>Add Your Train</h4>
+                <form>
+                    <div class="input-field col s12">
+                        <input type="text" class="validate" id="trainName">
+                        <label for="">Train Name</label>
+                    </div>
+                    <div class="input-field col s12">
+                        <input type="text" class="validate" id="destination">
+                        <label for="">Destination</label>
+                    </div>
+                    <div class="input-field col s12">
+                        <input type="time" class="validate" id="first">
+                        <label class='active' for="">First Train (HH:mm Military Time)</label>
+                    </div>
+                    <div class="input-field col s12">
+                        <input type="number" class="validate" id="freq">
+                        <label for="">Frequency (minutes)</label>
+                    </div>
+                    <button type="submit" class="btn black accent-3" id="addTrainBtn">Submit</button>
+                </form>
+            </div>
+        </div>
+    </div>
 
 
 
-
-        <script src="./assets/javascript/train.js"></script>
+    <script type='text/javascript' src="./assets/javascript/train.js"></script>
 </body>
 
 
