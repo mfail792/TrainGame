@@ -4,6 +4,14 @@
         background-image: url("https://www.toptal.com/designers/subtlepatterns/patterns/lilypads.png");
         text-align: center;
         text-shadow: 4px 4px 4px #aaa;
-        font-size: 20px;
-        font-family: 'Tangerine', 'Helvetica', cursive, serif;
+        font-size: 50px;
+        font-family: 'BioRhyme', 'Helvetica', cursive, serif;
     }
+
+#trainTable {
+    font-size: 20px;
+}
+
+h4 {
+    font: bold;
+}

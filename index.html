@@ -6,13 +6,13 @@
     <meta charset="UTF-8">
     <title>Train Game</title>
     <!--linking firebase server-->
-    <script src="https://www.gstatic.com/firebasejs/6.3.5/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/live/3.0/firebase.js"></script>    
     <!--google font link-->
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Tangerine">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=BioRhyme">
     <!--jquery link-->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <!--moment JS link-->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/locale/af.js"></script>
+    <script src="https://cdn.jsdelivr.net/momentjs/2.12.0/moment.min.js"></script>
     <!--Materialize CDN's-->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
@@ -59,25 +59,25 @@
         <!--adding train specifics that user can input-->
         <div class='row'>
             <div class='card-panel'>
-                <h4 class='center-align'>Add Your Train</h4>
+                <h4 class='center-align'>Add Train</h4>
                 <form>
-                    <div class="input-field col s12">
-                        <input type="text" class="validate" id="trainName">
+                    <div class="input-field col s12 daba">
+                        <input type="text" class="validate" id="trainNameInput">
                         <label for="">Train Name</label>
                     </div>
                     <div class="input-field col s12">
-                        <input type="text" class="validate" id="destination">
+                        <input type="text" class="validate" id="destinationInput">
                         <label for="">Destination</label>
                     </div>
                     <div class="input-field col s12">
-                        <input type="time" class="validate" id="first">
+                        <input type="time" class="validate" id="firstInput">
                         <label class='active' for="">First Train (HH:mm Military Time)</label>
                     </div>
                     <div class="input-field col s12">
-                        <input type="number" class="validate" id="freq">
+                        <input type="number" class="validate" id="frequencyInput">
                         <label for="">Frequency (minutes)</label>
                     </div>
-                    <button type="submit" class="btn black accent-3" id="TrainBtn">Submit</button>
+                    <button type="submit" class="btn black accent-3" id="addTrainBtn">Submit</button>
                 </form>
             </div>
         </div>

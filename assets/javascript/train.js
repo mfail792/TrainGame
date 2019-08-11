@@ -1,5 +1,5 @@
 // referencing firebase server to authenicate and initialize the application
-var config = {
+var firebaseConfig = {
     apiKey: "AIzaSyBI99NPnup0E664hUhummmuSYKwX0p_UBA",
     authDomain: "project1-ebc4f.firebaseapp.com",
     databaseURL: "https://project1-ebc4f.firebaseio.com",
@@ -9,16 +9,19 @@ var config = {
     appId: "1:677210244714:web:e074b7c2ed781fc8"
 };
 
-//initializing firebase connection and passing through config object
-firebase.initializeApp(config);
+//initializing firebase connection and passing through firebaseConfig
+firebase.initializeApp(firebaseConfig);
 
-var DB = firebase.database();
-var Time = moment();
 
-//creating listener to listen for changes made to database
+var database = firebase.database();
+console.log(database);
+
+var currentTime = moment();
+
+
+//creating listener to listen for changes made to database, passing in childSnap parameter
 database.ref().on("child_added", function (childSnap) {
     console.log(childSnap.val());
-
 
     //making variables to store values from user input
     var name = childSnap.val().name;
@@ -28,38 +31,73 @@ database.ref().on("child_added", function (childSnap) {
     var min = childSnap.val().min;
     var next = childSnap.val().next;
 
+
     //appending information taken from variables above to #trainTable HTML
     $("#trainTable > tbody").append("<tr><td>" + name + "</td><td>" + destination + "</td><td>" + frequency + "</td><td>" + next + "</td><td>" + min + "</td></tr>");
-
 });
 
-//declaring newTrain object to store other variables to be used later
 
-var newTrain = {
-    name: trainName,
-    destination: destination,
-    firstTrain: firstTrain,
-    frequency: frequency,
-    min: minUntilTrain,
-    next: nextTrain
-}
-
-
+//making new listener in the event data is altered or changed
 database.ref().on("value", function (snapshot) {
+    console.log(snapshot);
 
 
 });
 
-//grabs information from the input fields
-$("#TrainBtn").on("click", function () {
+//grabs information from the form
+$("#addTrainBtn").on("click", function () {
 
-    var trainName = $("#trainName").val().trim();
-    var destination = $("#destination").val().trim();
-    var firstTrain = $("#first").val().trim();
-    var frequency = $("#freq").val().trim();
+    var trainName = $("#trainNameInput").val().trim();
+    var destination = $("#destinationInput").val().trim();
+    var firstTrain = $("#firstInput").val().trim();
+    var frequency = $("#frequencyInput").val().trim();
 
+    //ensures that each input has a value
+    if (trainName == "") {
+        alert('Enter a train name.');
+        return false;
+    }
+    if (destination == "") {
+        alert('Enter a destination.');
+        return false;
+    }
+    if (firstTrain == "") {
+        alert('Enter a first train time.');
+        return false;
+    }
+    if (frequency == "") {
+        alert('Enter a frequency');
+        return false;
+    }
 
+    // THE MATH!
+    //subtracts the first train time back a year to ensure it's before current time.
+    var firstTrainConverted = moment(firstTrain, "hh:mm").subtract("1, years");
+    // the time difference between current time and the first train
+    var difference = currentTime.diff(moment(firstTrainConverted), "minutes");
+    var remainder = difference % frequency;
+    var minUntilTrain = frequency - remainder;
+    var nextTrain = moment().add(minUntilTrain, "minutes").format("hh:mm a");
 
+    var newTrain = {
+        name: trainName,
+        destination: destination,
+        firstTrain: firstTrain,
+        frequency: frequency,
+        min: minUntilTrain,
+        next: nextTrain
+    }
+
+    console.log(newTrain);
+    database.ref().push(newTrain);
+
+    $("#trainNameInput").val("");
+    $("#destinationInput").val("");
+    $("#firstInput").val("");
+    $("#frequencyInput").val("");
+
+    return false;
+});
 
 
 
