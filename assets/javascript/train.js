@@ -20,7 +20,7 @@ console.log(database);
 var currentTime = moment();
 
 
-//Creating listener to detect changes made to database, passing through to childSnap variable
+//Creating listener to detect changes made to database, passing through to childSnap parameter
 database.ref().on("child_added", function (childSnap) {
     console.log(childSnap.val());
 
@@ -113,35 +113,6 @@ $("#addTrainBtn").on("click", function () {
 
     return false;
 });
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 // //moment().format('MMMM Do YYYY, h:mm:ss a'); // August 10th 2019, 12:17:13 pm
