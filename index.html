@@ -6,9 +6,9 @@
     <meta charset="UTF-8">
     <title>Train Game</title>
     <!--linking firebase server-->
-    <script src="https://www.gstatic.com/firebasejs/live/3.0/firebase.js"></script>    
+    <script src="https://www.gstatic.com/firebasejs/live/3.0/firebase.js"></script>
     <!--google font link-->
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=BioRhyme">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Blinker">
     <!--jquery link-->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <!--moment JS link-->
@@ -32,13 +32,13 @@
 <body>
     <div class='container'>
         <div class='row'>
-            <div class='card-panel z-depth-2 black accent-3 white-text'>
+            <div class='card-panel z-depth-2 green accent-3 white-text'>
                 <h3 class='center-align'>Train Schedule</h3>
             </div>
         </div>
 
         <div class='row'>
-            <!-- train details via table layout -->
+            <!-- train schedule details via table    -->
             <div class='card-panel trainInfo'>
                 <h4 class='center-align'>Current Train Schedule</h4>
                 <table class="table striped center bordered responsive-table" id='trainTable'>
@@ -56,7 +56,7 @@
                 </table>
             </div>
         </div>
-        <!--adding train specifics that user can input-->
+        <!--adding train details to form area that user can input using text fields-->
         <div class='row'>
             <div class='card-panel'>
                 <h4 class='center-align'>Add Train</h4>
@@ -71,20 +71,19 @@
                     </div>
                     <div class="input-field col s12">
                         <input type="time" class="validate" id="firstInput">
-                        <label class='active' for="">First Train (HH:mm Military Time)</label>
+                        <label class='active' for="">First Train (HH:mm)</label>
                     </div>
                     <div class="input-field col s12">
                         <input type="number" class="validate" id="frequencyInput">
                         <label for="">Frequency (minutes)</label>
                     </div>
-                    <button type="submit" class="btn black accent-3" id="addTrainBtn">Submit</button>
+                    <button type="submit" class="btn green accent-3" id="addTrainBtn">Submit</button>
                 </form>
             </div>
         </div>
     </div>
 
-
-
+    <!--linking JS file-->
     <script type='text/javascript' src="./assets/javascript/train.js"></script>
 </body>
 

@@ -1,4 +1,4 @@
-// referencing firebase server to authenicate and initialize the application
+//Referencing firebase server to authenicate and initialize the application
 var firebaseConfig = {
     apiKey: "AIzaSyBI99NPnup0E664hUhummmuSYKwX0p_UBA",
     authDomain: "project1-ebc4f.firebaseapp.com",
@@ -9,21 +9,22 @@ var firebaseConfig = {
     appId: "1:677210244714:web:e074b7c2ed781fc8"
 };
 
-//initializing firebase connection and passing through firebaseConfig
+//Initializing firebase connection and passing through firebaseConfig for authentication
 firebase.initializeApp(firebaseConfig);
 
 
+//Creating a variable to reference the database
 var database = firebase.database();
 console.log(database);
 
 var currentTime = moment();
 
 
-//creating listener to listen for changes made to database, passing in childSnap parameter
+//Creating listener to detect changes made to database, passing through to childSnap variable
 database.ref().on("child_added", function (childSnap) {
     console.log(childSnap.val());
 
-    //making variables to store values from user input
+    //Making variables to store values from user input
     var name = childSnap.val().name;
     var destination = childSnap.val().destination;
     var firstTrain = childSnap.val().firstTrain;
@@ -31,20 +32,29 @@ database.ref().on("child_added", function (childSnap) {
     var min = childSnap.val().min;
     var next = childSnap.val().next;
 
+    //Console logging the variables
+    console.log(childSnap.val().name);
+    console.log(childSnap.val().destination);
+    console.log(childSnap.val().firstTrain);
+    console.log(childSnap.val().frequency);
+    console.log(childSnap.val().min);
+    console.log(childSnap.val().next);
 
-    //appending information taken from variables above to #trainTable HTML
+
+
+    //Taking information from variables above and appending them to the table row in HTML
     $("#trainTable > tbody").append("<tr><td>" + name + "</td><td>" + destination + "</td><td>" + frequency + "</td><td>" + next + "</td><td>" + min + "</td></tr>");
 });
 
-
-//making new listener in the event data is altered or changed
+//Creating listener to listen for changes made to database, passing through to snaphot variable and printing to console to check for errors
 database.ref().on("value", function (snapshot) {
     console.log(snapshot);
 
 
+
 });
 
-//grabs information from the form
+//Grabbing all the information from form fields on button click, storing the values in variables
 $("#addTrainBtn").on("click", function () {
 
     var trainName = $("#trainNameInput").val().trim();
@@ -52,7 +62,7 @@ $("#addTrainBtn").on("click", function () {
     var firstTrain = $("#firstInput").val().trim();
     var frequency = $("#frequencyInput").val().trim();
 
-    //ensures that each input has a value
+    //Making sure the input fields have data in them, if not sending alert to user
     if (trainName == "") {
         alert('Enter a train name.');
         return false;
@@ -70,15 +80,17 @@ $("#addTrainBtn").on("click", function () {
         return false;
     }
 
-    // THE MATH!
-    //subtracts the first train time back a year to ensure it's before current time.
-    var firstTrainConverted = moment(firstTrain, "hh:mm").subtract("1, years");
-    // the time difference between current time and the first train
-    var difference = currentTime.diff(moment(firstTrainConverted), "minutes");
+
+    //Subtracting the first train time back one year to make sure its before current time
+    var firstTrainConverting = moment(firstTrain, "hh:mm").subtract("1, years");
+
+    //Calculating the difference between current time and the first train
+    var difference = currentTime.diff(moment(firstTrainConverting), "minutes");
     var remainder = difference % frequency;
     var minUntilTrain = frequency - remainder;
     var nextTrain = moment().add(minUntilTrain, "minutes").format("hh:mm a");
 
+    //Creating newTrain object to store train values
     var newTrain = {
         name: trainName,
         destination: destination,
@@ -88,9 +100,12 @@ $("#addTrainBtn").on("click", function () {
         next: nextTrain
     }
 
+    //Console logging newTrain object to check for errors, pushing to database
     console.log(newTrain);
     database.ref().push(newTrain);
 
+
+    //Clearing fields
     $("#trainNameInput").val("");
     $("#destinationInput").val("");
     $("#firstInput").val("");
