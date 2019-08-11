@@ -17,7 +17,8 @@ firebase.initializeApp(firebaseConfig);
 var database = firebase.database();
 console.log(database);
 
-var currentTime = moment();
+var currentTime = moment(database);
+console.log(database);
 
 
 //Creating listener to detect changes made to database, passing through to childSnap parameter
