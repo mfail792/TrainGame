@@ -40,7 +40,7 @@ $("#addTrainBtn").on("click", function () {
     });
 
 
-    //Clearing fields
+    //Clearing input fields
     $("#trainNameInput").val("");
     $("#destinationInput").val("");
     $("#firstInput").val("");
@@ -64,6 +64,7 @@ dataRef.ref().on("child_added", function (childSnapshot) {
     var timeDifference = moment().diff(moment.unix(sFirstTime), "minutes");
     var sRemainder = moment().diff(moment.unix(sFirstTime), "minutes") % sFrequency;
     var sMinutes = sFrequency - sRemainder;
+    console.log(timeDifference);
 
     // calculate arrival time
     var sArrival = moment().add(sMinutes, "m").format("hh:mm A");
@@ -74,6 +75,5 @@ dataRef.ref().on("child_added", function (childSnapshot) {
     //Taking information from variables above and appending them to the table row in HTML
     $("#trainTable > tbody").append("<tr><td>" + sTrain + "</td><td>" + sDestination + "</td><td>" + sFrequency + "</td><td>" + sArrival + "</td><td>" + sMinutes + "</td></tr>");
 });
-    // }, function(errorObject) {
-    //   console.log("Errors handled: " + errorObject.code);
+  
 
