@@ -12,98 +12,32 @@ var firebaseConfig = {
 //Initializing firebase connection and passing through firebaseConfig for authentication
 firebase.initializeApp(firebaseConfig);
 
+var dataRef = firebase.database();
 
-//Creating a variable to reference the database
-var database = firebase.database();
-console.log(database);
-
-var currentTime = moment(database);
-console.log(database);
-
-
-//Creating listener to detect changes made to database, passing through to childSnap parameter
-database.ref().on("child_added", function (childSnap) {
-    console.log(childSnap.val());
-
-    //Making variables to store values from user input
-    var name = childSnap.val().name;
-    var destination = childSnap.val().destination;
-    var firstTrain = childSnap.val().firstTrain;
-    var frequency = childSnap.val().frequency;
-    var min = childSnap.val().min;
-    var next = childSnap.val().next;
-
-    //Console logging the variables
-    console.log(childSnap.val().name);
-    console.log(childSnap.val().destination);
-    console.log(childSnap.val().firstTrain);
-    console.log(childSnap.val().frequency);
-    console.log(childSnap.val().min);
-    console.log(childSnap.val().next);
-
-
-
-    //Taking information from variables above and appending them to the table row in HTML
-    $("#trainTable > tbody").append("<tr><td>" + name + "</td><td>" + destination + "</td><td>" + frequency + "</td><td>" + next + "</td><td>" + min + "</td></tr>");
-});
-
-//Creating listener to listen for changes made to database, passing through to snaphot variable and printing to console to check for errors
-database.ref().on("value", function (snapshot) {
-    console.log(snapshot);
-
-
-
-});
+//setting the starter values
+var Train = "";
+var Destination = "";
+var firstTime = "";
+var Frequency = "";
 
 //Grabbing all the information from form fields on button click, storing the values in variables
 $("#addTrainBtn").on("click", function () {
 
-    var trainName = $("#trainNameInput").val().trim();
-    var destination = $("#destinationInput").val().trim();
-    var firstTrain = $("#firstInput").val().trim();
-    var frequency = $("#frequencyInput").val().trim();
+    Train = $("#trainNameInput").val().trim();
+    Destination = $("#destinationInput").val().trim();
+    firstTime = moment($("#firstInput").val().trim(), "HH:mm").subtract(10, "years").format("X");
+    Frequency = $("#frequencyInput").val().trim();
+    console.log(firstTime);
 
-    //Making sure the input fields have data in them, if not sending alert to user
-    if (trainName == "") {
-        alert('Enter a train name.');
-        return false;
-    }
-    if (destination == "") {
-        alert('Enter a destination.');
-        return false;
-    }
-    if (firstTrain == "") {
-        alert('Enter a first train time.');
-        return false;
-    }
-    if (frequency == "") {
-        alert('Enter a frequency');
-        return false;
-    }
+    //pushing the data to the database
+    dataRef.ref().push({
 
-
-    //Subtracting the first train time back one year to make sure its before current time
-    var firstTrainConverting = moment(firstTrain, "hh:mm").subtract("1, years");
-
-    //Calculating the difference between current time and the first train
-    var difference = currentTime.diff(moment(firstTrainConverting), "minutes");
-    var remainder = difference % frequency;
-    var minUntilTrain = frequency - remainder;
-    var nextTrain = moment().add(minUntilTrain, "minutes").format("hh:mm a");
-
-    //Creating newTrain object to store train values
-    var newTrain = {
-        name: trainName,
-        destination: destination,
-        firstTrain: firstTrain,
-        frequency: frequency,
-        min: minUntilTrain,
-        next: nextTrain
-    }
-
-    //Console logging newTrain object to check for errors, pushing to database
-    console.log(newTrain);
-    database.ref().push(newTrain);
+        Train: Train,
+        Destination: Destination,
+        firstTime: firstTime,
+        Frequency: Frequency,
+      
+    });
 
 
     //Clearing fields
@@ -112,13 +46,34 @@ $("#addTrainBtn").on("click", function () {
     $("#firstInput").val("");
     $("#frequencyInput").val("");
 
+    // disabling the refresh
     return false;
 });
 
+//Creating listener to detect changes made to database, passing through to childSnapshot parameter
+dataRef.ref().on("child_added", function (childSnapshot) {
 
-// //moment().format('MMMM Do YYYY, h:mm:ss a'); // August 10th 2019, 12:17:13 pm
-// moment().format('dddd');                    // Saturday
-// moment().format("MMM Do YY");               // Aug 10th 19
-// moment().format('YYYY [escaped] YYYY');     // 2019 escaped 2019
-// moment().format();                          // 2019-08-10T12:17:13-05:00
+
+    // storing into variables
+    var sTrain = childSnapshot.val().Train;
+    var sDestination = childSnapshot.val().Destination;
+    var sFrequency = childSnapshot.val().Frequency;
+    var sFirstTime = childSnapshot.val().firstTime;
+
+    // calculate the frequency time
+    var timeDifference = moment().diff(moment.unix(sFirstTime), "minutes");
+    var sRemainder = moment().diff(moment.unix(sFirstTime), "minutes") % sFrequency;
+    var sMinutes = sFrequency - sRemainder;
+
+    // calculate arrival time
+    var sArrival = moment().add(sMinutes, "m").format("hh:mm A");
+
+    console.log(sMinutes);
+
+
+    //Taking information from variables above and appending them to the table row in HTML
+    $("#trainTable > tbody").append("<tr><td>" + sTrain + "</td><td>" + sDestination + "</td><td>" + sFrequency + "</td><td>" + sArrival + "</td><td>" + sMinutes + "</td></tr>");
+});
+    // }, function(errorObject) {
+    //   console.log("Errors handled: " + errorObject.code);
 
